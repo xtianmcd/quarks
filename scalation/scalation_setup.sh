@@ -10,6 +10,7 @@ wget http://cobweb.cs.uga.edu/~jam/scalation_1.4.tar.gz
 tar xvfz scalation_1.4.tar.gz
 
 # create and enter project directory
+cd scalation_1.4
 mkdir HelloWorldOfDS
 cd HelloWorldOfDS
 
