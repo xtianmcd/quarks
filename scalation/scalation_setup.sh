@@ -10,9 +10,8 @@ wget http://cobweb.cs.uga.edu/~jam/scalation_1.4.tar.gz
 tar xvfz scalation_1.4.tar.gz
 
 # create and enter project directory
-cd scalation_1.4
-mkdir HelloWorldOfDS
-cd HelloWorldOfDS
+mkdir ~/Documents/HelloWorldOfDS
+cd ~/Documents/HelloWorldOfDS
 
 # source for automated build: Scala Cookbook Ch. 18.1
 # generate file structure
