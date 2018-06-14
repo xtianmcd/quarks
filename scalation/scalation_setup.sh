@@ -23,4 +23,4 @@ version := "1.0"
 scalaVersion := "2.12.4"' > build.sbt
 
 # move necessary .jar files into project directory
-scp -r /Applications/scalation_1.4/scalation_modeling/lib/ ./lib/
+scp -r /Applications/scalation_1.4/scalation_models/lib/ ./lib/
