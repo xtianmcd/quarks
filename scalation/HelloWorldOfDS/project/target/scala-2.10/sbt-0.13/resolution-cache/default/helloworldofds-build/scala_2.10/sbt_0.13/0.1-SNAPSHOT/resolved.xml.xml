@@ -4,7 +4,7 @@
 		module="helloworldofds-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20180613213456"
+		publication="20180614214808"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>

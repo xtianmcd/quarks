@@ -1,26 +1,21 @@
 [0m[[0minfo[0m] [0mRunning scalation.HelloWorldOfDS [0m
 [0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0mdebug[0m] [0m  Classpath:[0m
-[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/HelloWorldOfDS/target/scala-2.12/classes[0m
-[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/HelloWorldOfDS/lib/scalation_database_2.12-1.4.jar[0m
-[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/HelloWorldOfDS/lib/scalation_mathstat_2.12-1.4.jar[0m
-[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/HelloWorldOfDS/lib/scalation_modeling_2.12-1.4.jar[0m
+[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/GitHub/quarks/scalation/HelloWorldOfDS/target/scala-2.12/classes[0m
+[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/GitHub/quarks/scalation/HelloWorldOfDS/lib/scalation_database_2.12-1.4.jar[0m
+[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/GitHub/quarks/scalation/HelloWorldOfDS/lib/scalation_mathstat_2.12-1.4.jar[0m
+[0m[[0mdebug[0m] [0m	/Users/xtian/Documents/GitHub/quarks/scalation/HelloWorldOfDS/lib/scalation_modeling_2.12-1.4.jar[0m
 [0m[[0mdebug[0m] [0m	/Users/xtian/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.4.jar[0m
 [0m[[0mdebug[0m] [0mWaiting for thread run-main-0 to terminate.[0m
-[0m[[31merror[0m] [0m(run-main-0) java.lang.NumberFormatException: empty String[0m
-java.lang.NumberFormatException: empty String
-	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1842)
-	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
-	at java.lang.Double.parseDouble(Double.java:538)
-	at scala.collection.immutable.StringLike.toDouble(StringLike.scala:318)
-	at scala.collection.immutable.StringLike.toDouble$(StringLike.scala:318)
-	at scala.collection.immutable.StringOps.toDouble(StringOps.scala:29)
-	at scalation.linalgebra.VectorD$.$anonfun$apply$4(VectorD.scala:1034)
-	at scalation.linalgebra.VectorD$.apply(VectorD.scala:1034)
-	at scalation.linalgebra.MatrixD$.$anonfun$apply$7(MatrixD.scala:1656)
-	at scalation.linalgebra.MatrixD$.apply(MatrixD.scala:1655)
-	at scalation.HelloWorldOfDS$.prepReg(HelloWorldOfDS.scala:51)
-	at scalation.HelloWorldOfDS$.delayedEndpoint$scalation$HelloWorldOfDS$1(HelloWorldOfDS.scala:285)
+[0m[[31merror[0m] [0m(run-main-0) java.lang.ArrayIndexOutOfBoundsException: 12[0m
+java.lang.ArrayIndexOutOfBoundsException: 12
+	at scalation.linalgebra.VectorD.apply(VectorD.scala:88)
+	at scalation.linalgebra.MatrixD.$anonfun$setCol$1(MatrixD.scala:302)
+	at scalation.linalgebra.MatrixD.setCol(MatrixD.scala:302)
+	at scalation.linalgebra.MatrixD.$anonfun$$plus$up$colon$1(MatrixD.scala:368)
+	at scalation.linalgebra.MatrixD.$plus$up$colon(MatrixD.scala:368)
+	at scalation.HelloWorldOfDS$.prepReg(HelloWorldOfDS.scala:55)
+	at scalation.HelloWorldOfDS$.delayedEndpoint$scalation$HelloWorldOfDS$1(HelloWorldOfDS.scala:284)
 	at scalation.HelloWorldOfDS$delayedInit$body.apply(HelloWorldOfDS.scala:36)
 	at scala.Function0.apply$mcV$sp(Function0.scala:34)
 	at scala.Function0.apply$mcV$sp$(Function0.scala:34)

@@ -218,7 +218,7 @@ object HelloWorldOfDS extends App
         if (show) println(s"initial dataset has $datasetx.dim1 rows; fold training set has $foldx.dim1 rows")
         if (show) {println(s"MatrixI training set: $foldx")}
 
-        var nb  = new NaiveBayes         (foldx,  foldy, datasetfn, k_bc, datasetcn,    vc)		// providing only the training data/labels
+        var nb  = new NaiveBayes         (foldx,  foldy, datasetfn, k, datasetcn,    vc)		// providing only the training data/labels
 
         nb.train  ()
 
@@ -280,14 +280,13 @@ object HelloWorldOfDS extends App
     val wineData = BASE_DIR + "winequality-white.csv"
     val bcData   = BASE_DIR + "classifier/breast-cancer.arff"
 
-
     // Multiple Linear Regression 
-    val (x_mlr, y_mlr) = prepReg(wineData, 0, 12)            // prep data for mlr
-    runReg(x_mlr, y_mlr)                                  // run initial regression
+    val (x_mlr, y_mlr) = prepReg(wineData, 0, 11)            // prep data for mlr
+    //#runReg(x_mlr, y_mlr)                                  // run initial regression
 
     // perform a transformation on X4 and rerun regression
-    var col_trans = x_mlr.col(11).~^(2)
-    println(col_trans)
+    //#var col_trans = x_mlr.col(11).~^(2)
+    //#println(col_trans)
     //col_trans = col_trans.~^(2)
     
     //val x_trans = x_mlr.setCol(11, col_trans)         // substitute transformed col
@@ -299,13 +298,13 @@ object HelloWorldOfDS extends App
 
 
     // Naive Bayes 
-    val (x_bc, y_bc, fn_bc, cn_bc, k_bc) = prepBayes(bcData)
+    //#val (x_bc, y_bc, fn_bc, cn_bc, k_bc) = prepBayes(bcData)
 
     // call the methods to run the classifiers with the given data for given folds:
     //10-fold CV
-    crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  10)
+    //#crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  10)
 
     //20-fold CV
-    crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  20)
+    //#crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  20)
 
 }
