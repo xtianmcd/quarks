@@ -51,7 +51,7 @@ object HelloWorldOfDS extends App
       val df    = MatrixD(fp, skip)
       val df_x  = df.sliceExclude(df.dim1, yCol)     // X (data) matrix
       val df_y  = df.col(yCol)                       // y (target) vector
-      val df_i  = VectorD.one(df.dim2)               // intercept
+      val df_i  = VectorD.one(df.dim1)               // intercept
       val df_x1 = df_x.+^:(df_i)                     // prepend intercept to X
       (df_x1, df_y)
     } // prepReg
@@ -83,7 +83,7 @@ object HelloWorldOfDS extends App
     def runReg (x: MatrixD, y: VectorD) =
     {
       val rg = new Regression(x, y)
-      rg.train  ()
+      rg.train  ().eval(y)
       rg.report ()
       println   (rg.vif)
     } // runReg
@@ -282,15 +282,17 @@ object HelloWorldOfDS extends App
 
     // Multiple Linear Regression 
     val (x_mlr, y_mlr) = prepReg(wineData, 0, 11)            // prep data for mlr
-    //#runReg(x_mlr, y_mlr)                                  // run initial regression
+    runReg(x_mlr, y_mlr)                                  // run initial regression
 
     // perform a transformation on X4 and rerun regression
-    //#var col_trans = x_mlr.col(11).~^(2)
-    //#println(col_trans)
-    //col_trans = col_trans.~^(2)
+    var col_bef   = x_mlr.col(11)
+    var col_trans = col_bef.~^(2)
+    //println("column before transformation: " + col_bef)
+    //println("column after  transformation: " + col_trans)
     
-    //val x_trans = x_mlr.setCol(11, col_trans)         // substitute transformed col
-    //runReg(x_trans, y_mlr)
+    x_mlr.setCol(11, col_trans)         // substitute transformed col
+    // println(x_mlr)
+    runReg(x_mlr, y_mlr)
 
     // drop cols suspected of not adding much information; rerun regression
     //val df_dropped = df_trans.sliceExclude(rows, 11).sliceExclude(rows, 5).sliceExclude(rows, 1)
@@ -298,13 +300,13 @@ object HelloWorldOfDS extends App
 
 
     // Naive Bayes 
-    //#val (x_bc, y_bc, fn_bc, cn_bc, k_bc) = prepBayes(bcData)
+    val (x_bc, y_bc, fn_bc, cn_bc, k_bc) = prepBayes(bcData)
 
     // call the methods to run the classifiers with the given data for given folds:
     //10-fold CV
-    //#crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  10)
+    crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  10)
 
     //20-fold CV
-    //#crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  20)
+    crossValidateAlgos (" CANCER ", x_bc,  y_bc,  fn_bc,  cn_bc, k_bc,  20)
 
 }
