@@ -26,6 +26,7 @@ import scalation.random.PermutedVecI
 import scalation.random.RNGStream.ranStream
 import scalation.linalgebra._
 import scala.math.sqrt
+import scala.collection.mutable.Set
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 /** The 'HelloWorldOfDS' object uses the MatrixD and Regression classes
@@ -80,13 +81,42 @@ object HelloWorldOfDS extends App
     *   @param x  training data
     *   @param y  target values
     */
-    def runReg (x: MatrixD, y: VectorD) =
+    def runReg (x: MatrixD, y: VectorD, dataset: String) =
     {
       val rg = new Regression(x, y)
-      rg.train  ().eval(y)
-      rg.report ()
-      println   (rg.vif)
+      rg.train ().eval(y)
+      println  ()
+      println  ("|====================|")
+      println (s"|  $dataset DATASET  |")
+      println (s"|    MULT LIN REG    |")
+      println  ("|====================|")
+      println  ()
+      rg.report()
+      println  ("VIF: \n")
+      println  (rg.vif)
+      println  ()
     } // runReg
+
+    def prunePreds (x: MatrixD, y: VectorD) =
+    {
+      val rg = new Regression (x, y)
+      // source for fwd selection and backward elim: RegressionTest4 in Regression.scala 
+      println ("Forward Selection Test")
+      val fcols = Set (0)
+      for (l <- 1 until x.dim2) {
+        val (x_j, b_j, fit_j) = rg.forwardSel (fcols)        // add most predictive variable
+        println (s"forward model: add x_j = $x_j with b = $b_j \n fit = $fit_j")
+        fcols += x_j
+      } // for
+
+      println ("Backward Elimination Test")
+      val bcols = Set (0) ++ Array.range (1, x.dim2)
+      for (l <- 1 until x.dim2) {
+        val (x_j, b_j, fit_j) = rg.backwardElim (bcols)     // eliminate least predictive variable
+        println (s"backward model: remove x_j = $x_j with b = $b_j \n fit = $fit_j")
+        bcols -= x_j
+      } // for
+    } // prunePreds
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     /** Compute and return accuracy, recall, precision and F-Score from the
@@ -260,7 +290,8 @@ object HelloWorldOfDS extends App
       println ()
       println ("|====================|")
       println(s"|  $dataset DATASET  |")
-      println(s"|     $nx   FOLDS     |")
+      println(s"|   $nx  FOLDS  CV    |")
+      println(s"|    NAIVE  BAYES    |")
       println ("|====================|")
       println ()
 
@@ -280,11 +311,10 @@ object HelloWorldOfDS extends App
     val wineData = BASE_DIR + "winequality-white.csv"
     val bcData   = BASE_DIR + "classifier/breast-cancer.arff"
 
-    // Multiple Linear Regression 
     val (x_mlr, y_mlr) = prepReg(wineData, 0, 11)            // prep data for mlr
-    runReg(x_mlr, y_mlr)                                  // run initial regression
+    runReg(x_mlr, y_mlr, "WineQual")                                  // run initial regression
 
-    // perform a transformation on X4 and rerun regression
+    // perform a transformation on "Alcohol content" predictor and rerun regression
     var col_bef   = x_mlr.col(11)
     var col_trans = col_bef.~^(2)
     //println("column before transformation: " + col_bef)
@@ -292,12 +322,13 @@ object HelloWorldOfDS extends App
     
     x_mlr.setCol(11, col_trans)         // substitute transformed col
     // println(x_mlr)
-    runReg(x_mlr, y_mlr)
+    runReg(x_mlr, y_mlr, "Wine-tf ")
+
+    prunePreds(x_mlr, y_mlr)
 
     // drop cols suspected of not adding much information; rerun regression
-    //val df_dropped = df_trans.sliceExclude(rows, 11).sliceExclude(rows, 5).sliceExclude(rows, 1)
-    //runReg(df_dropped, y_mlr)
-
+    val df_dropped = x_mlr.sliceExclude(x_mlr.dim1, 3)//.sliceExclude(x_mlr.dim1, 5)//.sliceExclude(x_mlr.dim1, 7)
+    runReg(df_dropped, y_mlr, "WineDrop")
 
     // Naive Bayes 
     val (x_bc, y_bc, fn_bc, cn_bc, k_bc) = prepBayes(bcData)
